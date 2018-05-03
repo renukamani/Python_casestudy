@@ -1,6 +1,6 @@
 import sys
 import threading
-
+q = []
 class myThread(threading.Thread) :
     def __init__(self,f_name,fh) :
         threading.Thread.__init__(self)
@@ -18,7 +18,7 @@ class myThread(threading.Thread) :
             for word in words :
                 for letter in word :
                     self.char_count += 1
-        print self.f_name,self.line_count,self.word_count,self.char_count
+        q.append((self.f_name,self.line_count,self.word_count,self.char_count))
 
 lst = sys.argv
 lst.pop(0)
@@ -37,3 +37,12 @@ for i in range(len(lst)) :
 #starting threads
 for i in range(len(lst)) :
     thread[i].start()
+
+#joining threads
+for i in range(len(lst)) :
+    thread[i].join()
+
+q.sort()
+
+for item in q :
+    print item[0],item[1],item[2],item[3]
