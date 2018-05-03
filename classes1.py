@@ -14,14 +14,14 @@ for item in fil :
             line = line.split()
             if "class" in line :
                 if "(" in line[1] :
-                    names = re.split('( |) |: |, | ',line[1])
+                    names = re.findall(r"[\w']+",line[1])
+                    #names = line[1].split("(")
                     derv_class.append((names,item))
-                    print(names[0])
                 else :
-                    base_class.append((re.findall('([^:]*)',line[1]),item))
+                    base_class.append((re.findall(r"[\w']+",line[1]),item))
 for i_b in base_class :
-    print (i_b,":")
+    print i_b[0][0],"["+i_b[1]+"]",":"
     for i_d in derv_class :
-        if i_b[0] in  i_d :
-            print("\t",i_d[0],i_d[-1])
+        if i_b[0][0] in i_d[0] :
+            print "\t",i_d[0][0],"["+i_d[1]+"]"
     print("\n")
